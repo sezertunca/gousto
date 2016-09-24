@@ -7,11 +7,20 @@ use Illuminate\Support\Collection;
 use App\Recipe;
 use File;
 use Illuminate\Pagination\LengthAwarePaginator;
+use App\Transformers\RecipeTransformer;
 
 class RecipeController extends Controller
 {
-    public function __construct()
+    /**
+    * @var App\Transformers\RecipeTransformer
+    *
+    */
+    protected $recipeTransformer;
+
+    public function __construct(RecipeTransformer $recipeTransformer)
     {
+		$this->recipeTransformer = $recipeTransformer;
+
 		if (! file_exists(storage_path('app/public/data.json')))
 		{
 			$data = collect($this->readCSVAndCreateRecipeObjects());
@@ -26,7 +35,7 @@ class RecipeController extends Controller
     public function index()
     {
     	$recipes = json_decode(file_get_contents(storage_path('app/public/data.json')));
-		return response()->json(["recipes" => $recipes], 200);
+		return response()->json(["recipes" => $this->recipeTransformer->transformCollection($recipes)], 200);
     }
  
     /**
@@ -41,7 +50,7 @@ class RecipeController extends Controller
 		{
 			if ($recipe->id == $recipeId)
 			{
-				return response()->json(["recipe" => $recipe], 200);
+				return response()->json(["recipe" => $this->recipeTransformer->transform($recipe)], 200);
 			}
 		}
 
