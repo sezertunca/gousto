@@ -9,7 +9,7 @@ use File;
 use Illuminate\Pagination\LengthAwarePaginator;
 use App\Transformers\RecipeTransformer;
 
-class RecipeController extends Controller
+class RecipeController extends ApiController
 {
     /**
     * @var App\Transformers\RecipeTransformer
@@ -53,14 +53,7 @@ class RecipeController extends Controller
 				return response()->json(["recipe" => $this->recipeTransformer->transform($recipe)], 200);
 			}
 		}
-
-		return response()->json(
-			[
-				"error" => 
-						[ 
-							"message" => "Couldn't find the recipe with ID: ".$recipeId 
-						]
-			], 404);
+		return $this->respondNotFound('Could not find a recipe with ID: '.$recipeId);
 	}
 	
 	/**
