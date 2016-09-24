@@ -28,8 +28,11 @@ class RecipeController extends Controller
     	$recipes = json_decode(file_get_contents(storage_path('app/public/data.json')));
 		return response()->json(["recipes" => $recipes], 200);
     }
-
-    // Fetch a recipe by id
+ 
+    /**
+    * Fetch a recipe by id
+    * @return Response JSON
+    */
 	public function show($recipeId)
 	{
 		$recipes = json_decode(file_get_contents(storage_path('app/public/data.json')));
@@ -98,7 +101,10 @@ class RecipeController extends Controller
 		return response()->json(["Success" => "New recipe added."], 200);
 	}
 
-	// Update an existing recipe
+	/**
+    * Update an existing recipe
+    * @return Response JSON
+    */
 	public function update(Request $request, $recipeId)
 	{
 		$recipes = json_decode(file_get_contents(storage_path('app/public/data.json')));
@@ -142,14 +148,46 @@ class RecipeController extends Controller
 		return response()->json(["Success" => "recipe with id: ".$recipeId." updated"], 200);
 	}
 
-	// Rate an existing recipe between 1 and 5
+	/**
+    * Rate an existing recipe between 1 and 5
+    * @return Response JSON
+    */
 	public function rate(Request $request, $recipeId)
 	{
+		// Validate
+		// Check recipe exists
+		// Check value is between 1 and 5
+
+		$recipes = json_decode(file_get_contents(storage_path('app/public/data.json')));
+
+		$value = $request["value"];
+
+		foreach($recipes as $recipe)
+		{
+			if ($recipe->id == $recipeId)
+			{
+				// Got the recipe we are looking for
+				$recipe->rate = $value;
+
+				$data = json_encode($recipes, true);
+		
+				file_put_contents(storage_path('app/public/data.json'), $data);
+
+				return response()->json(["info" => "recipe with id: ".$recipeId." rated with value: ".$recipe->rate], 200);
+			}
+		}
 	}
 
 	// Fetch all recipes for a specific cuisine (should paginate)
 	public function getRecipesForCuisine($cuisine)
 	{
+		$recipes = collect(json_decode(file_get_contents(storage_path('app/public/data.json'))));
+
+		$recipesForCuisine = $recipes->where('recipe_cuisine', $cuisine);
+
+		$recipesForCuisine = $this->paginate($recipesForCuisine, 5);
+
+		return response()->json(["recipes" => $recipesForCuisine], 200);
 	}
 
 	private function readCSVAndCreateRecipeObjects()
