@@ -63,7 +63,8 @@ class RecipeController extends Controller
 		$recipes = json_decode(file_get_contents(storage_path('app/public/data.json')));
 
 		$last_recipe = end($recipes);
-		$id = $last_recipe->id += 1;
+		$id = $last_recipe->id;
+		$id += 1;
 
 		$recipe = new Recipe(	$id,
 								date("Y-m-d H:i:s"),
@@ -95,6 +96,7 @@ class RecipeController extends Controller
 		$recipes[] = $recipe;
 
 		$data = json_encode($recipes, true);
+
 		
 		file_put_contents(storage_path('app/public/data.json'), $data);
 
