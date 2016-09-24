@@ -11,8 +11,8 @@ class ApiTester extends TestCase
 		$this->faker = Faker::create();
 	}
 
-	public function getJSON($uri)
+	public function getJSON($uri, $method = 'GET')
     {
-        return $this->call('GET', $uri)->getContent();
+        return json_decode($this->call($method, $uri)->getContent());
     }
 }

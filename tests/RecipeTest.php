@@ -4,6 +4,14 @@
 
 class RecipeTest extends ApiTester
 {
+    
+    // See the total number of recipes
+    // Add a recipe and see the total number after adding
+    // Update recipe and see if it's updated
+    // Rate a recipe
+    // Try to rate a recipe that is less than 1 or more than 5;
+
+
     /**
      * @test
      */
@@ -30,4 +38,5 @@ class RecipeTest extends ApiTester
         $this->getJSON('api/v1/recipes/100');
         $this->assertResponseStatus(404);
     }
+
 }

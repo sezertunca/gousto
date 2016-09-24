@@ -8,6 +8,7 @@ use App\Recipe;
 use File;
 use Illuminate\Pagination\LengthAwarePaginator;
 use App\Transformers\RecipeTransformer;
+use Validator;
 
 class RecipeController extends ApiController
 {
@@ -102,7 +103,7 @@ class RecipeController extends ApiController
 		
 		file_put_contents(storage_path('app/public/data.json'), $data);
 
-		return $this->respond(["Success" => "New recipe added."]);
+		return $this->setStatusCode(201)->respond(["Success" => "New recipe added."]);
 	}
 
 	/**
@@ -161,6 +162,17 @@ class RecipeController extends ApiController
 		// Validate
 		// Check recipe exists
 		// Check value is between 1 and 5
+
+         $rules = array(
+            'value' => 'required|integer|between:1,5',
+        );
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) 
+        {
+            return $this->respondValidationError($validator->errors()->getMessages());
+        }
 
 		$recipes = json_decode(file_get_contents(storage_path('app/public/data.json')));
 

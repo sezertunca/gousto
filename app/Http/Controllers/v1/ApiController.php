@@ -43,6 +43,15 @@ class ApiController extends Controller
     	return $this->setStatusCode(404)->responseWithError($message);
     }
 
+     /**
+     * @param  $message
+     * @return mixed
+     */
+    public function respondValidationError($message = 'Could not validate')
+    {
+        return $this->setStatusCode(403)->responseWithError($message);
+    }
+
     /**
      * @param  [type]
      * @param  array
