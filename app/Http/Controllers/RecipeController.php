@@ -36,5 +36,24 @@ class RecipeController extends Controller
 	{
 	}
 
+
+	private function readCSVAndCreateRecipeObjects()
+	{
+		$csv = storage_path('app/public/data.csv');    
+	    
+	    $rawData = array_map('str_getcsv', file($csv));
+
+		$header = array_shift($rawData);
+
+		$recipes = array();
+
+		foreach ($rawData as $row) 
+		{
+			$recipes[] = array_combine($header, $row);
+		}
+		
+		return $recipes;
+	}
+
  
 }
