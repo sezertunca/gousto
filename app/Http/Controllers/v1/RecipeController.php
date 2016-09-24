@@ -24,6 +24,7 @@ class RecipeController extends ApiController
 
 		if (! file_exists(storage_path('app/public/data.json')))
 		{
+			// Convert recipes array to ollection (collect) to be able to make calls such as where('cuisine', 'asian')
 			$data = collect($this->readCSVAndCreateRecipeObjects());
 			File::put(storage_path('app/public/data.json'),$data);
 		}
@@ -63,6 +64,7 @@ class RecipeController extends ApiController
     */
 	public function store(Request $request)
 	{
+		// Enable the validation rules as need 
 		$rules = array(
             'box_type' => 'required | max:50',
 			'title' => 'required | max:255',
@@ -98,6 +100,7 @@ class RecipeController extends ApiController
 
 		$recipes = json_decode(file_get_contents(storage_path('app/public/data.json')));
 
+		// Bad workaround for auto_increment
 		$last_recipe = end($recipes);
 		$id = $last_recipe->id;
 		$id += 1;
@@ -132,8 +135,8 @@ class RecipeController extends ApiController
 		$recipes[] = $recipe;
 
 		$data = json_encode($recipes, true);
-
 		
+		// Update the JSON file
 		file_put_contents(storage_path('app/public/data.json'), $data);
 
 		return $this->setStatusCode(201)->respond(["Success" => "New recipe added."]);
@@ -151,6 +154,7 @@ class RecipeController extends ApiController
 		{
 			if ($recipe->id == $recipeId)
 			{
+				// Create a recipe with only fields provided
 				$recipe->updated_at = date("Y-m-d H:i:s");
 				$recipe->box_type = $request["box_type"] == null ? $recipe->box_type : $request["box_type"];
 				$recipe->title = $request["title"] == null ? $recipe->title : $request["title"];
@@ -181,6 +185,7 @@ class RecipeController extends ApiController
 
 		$data = json_encode($recipes, true);
 		
+		// Update the JSON file
 		file_put_contents(storage_path('app/public/data.json'), $data);
 
 		return $this->respond(["Success" => "recipe with id: ".$recipeId." updated"]);
@@ -220,6 +225,7 @@ class RecipeController extends ApiController
 
 				$data = json_encode($recipes, true);
 		
+				// Update the JSON file
 				file_put_contents(storage_path('app/public/data.json'), $data);
 
 				return $this->respond(["info" => "recipe with id: ".$recipeId." rated with value: ".$recipe->rate]);
