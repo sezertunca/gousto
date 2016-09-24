@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\v1;
 
 use Illuminate\Http\Request;
 
@@ -36,7 +36,7 @@ class ApiController extends Controller
 
     /**
      * @param  $message
-     * @return [type]
+     * @return mixed
      */
     public function respondNotFound($message = 'Not found')
     {
@@ -46,7 +46,7 @@ class ApiController extends Controller
     /**
      * @param  [type]
      * @param  array
-     * @return [type]
+     * @return response JSON
      */
     public function respond($data, $headers = [])
     {
@@ -54,8 +54,8 @@ class ApiController extends Controller
     }
 
     /**
-     * @param  [type]
-     * @return [type]
+     * @param  $message
+     * @return mixed
      */
     public function responseWithError($message)
     {
