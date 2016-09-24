@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use App\Recipe;
 use File;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class RecipeController extends Controller
 {
@@ -18,7 +19,10 @@ class RecipeController extends Controller
 		}
     }
 
-    // Show all recipes
+    /**
+    * Show all recipes
+    * @return Response JSON
+    */
     public function index()
     {
     	$recipes = json_decode(file_get_contents(storage_path('app/public/data.json')));
@@ -40,10 +44,52 @@ class RecipeController extends Controller
 
 		return response()->json(["error" => "Couldn't find the recipe with ID: ".$recipeId], 404);
 	}
-
-	// Rate an existing recipe between 1 and 5
-	public function rate(Request $request, $recipeId)
+	
+	/**
+    * Store a new recipe
+    * @return Response JSON
+    */
+	public function store(Request $request)
 	{
+		$recipes = json_decode(file_get_contents(storage_path('app/public/data.json')));
+
+		$last_recipe = end($recipes);
+		$id = $last_recipe->id += 1;
+
+		$recipe = new Recipe(	$id,
+								date("Y-m-d H:i:s"),
+								date("Y-m-d H:i:s"),
+								$request['box_type'],
+								$request['title'],
+								$request['slug'],
+								$request['short_title'],
+								$request['marketing_description'],
+								$request['calories_kcal'],
+								$request['protein_grams'],
+								$request['fat_grams'],
+								$request['carbs_grams'],
+								$request['bulletpoint1'],
+								$request['bulletpoint2'],
+								$request['bulletpoint3'],
+								$request['recipe_diet_type_id'],
+								$request['season'],
+								$request['base'],
+								$request['protein_source'],
+								$request['preparation_time_minutes'],
+								$request['shelf_life_days'],
+								$request['equipment_needed'],
+								$request['origin_country'],
+								$request['recipe_cuisine'],
+								$request['in_your_box'],
+								$request['gousto_reference']);
+
+		$recipes[] = $recipe;
+
+		$data = json_encode($recipes, true);
+		
+		file_put_contents(storage_path('app/public/data.json'), $data);
+
+		return response()->json(["Success" => "New recipe added."], 200);
 	}
 
 	// Update an existing recipe
@@ -51,8 +97,8 @@ class RecipeController extends Controller
 	{
 	}
 
-	// Store a new recipe
-	public function store(Request $request)
+	// Rate an existing recipe between 1 and 5
+	public function rate(Request $request, $recipeId)
 	{
 	}
 
@@ -110,5 +156,22 @@ class RecipeController extends Controller
 		return $recipeObjects;
 	}
 
- 
+		/**
+     * Create a length aware custom paginator instance.
+     *
+     * @param  Collection  $items
+     * @param  int  $perPage
+     * @return \Illuminate\Pagination\LengthAwarePaginator
+     */
+    protected function paginate($items, $perPage = 10)
+    {
+        //Get current page form url e.g. &page=1
+        $currentPage = LengthAwarePaginator::resolveCurrentPage();
+
+        //Slice the collection to get the items to display in current page
+        $currentPageItems = $items->slice(($currentPage - 1) * $perPage, $perPage);
+
+        //Create our paginator and pass it to the view
+        return new LengthAwarePaginator($currentPageItems, count($items), $perPage);
+    }
 }
