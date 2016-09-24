@@ -28,6 +28,17 @@ class RecipeController extends Controller
     // Fetch a recipe by id
 	public function show($recipeId)
 	{
+		$recipes = json_decode(file_get_contents(storage_path('app/public/data.json')));
+
+		foreach($recipes as $recipe)
+		{
+			if ($recipe->id == $recipeId)
+			{
+				return response()->json(["recipe" => $recipe], 200);
+			}
+		}
+
+		return response()->json(["error" => "Couldn't find the recipe with ID: ".$recipeId], 404);
 	}
 
 	// Rate an existing recipe between 1 and 5
