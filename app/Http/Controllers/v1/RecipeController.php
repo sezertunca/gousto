@@ -63,6 +63,39 @@ class RecipeController extends ApiController
     */
 	public function store(Request $request)
 	{
+		$rules = array(
+            'box_type' => 'required | max:50',
+			'title' => 'required | max:255',
+			'slug' => 'required | max:255',
+			// 'short_title' => 'required',
+			'marketing_description' => 'required | string',
+			// 'calories_kcal' => 'required',
+			// 'protein_grams' => 'required',
+			// 'fat_grams' => 'required',
+			// 'carbs_grams' => 'required',
+			// 'bulletpoint1' => 'required',
+			// 'bulletpoint2' => 'required',
+			// 'bulletpoint3' => 'required',
+			// 'recipe_diet_type_id' => 'required',
+			// 'season' => 'required',
+			// 'base' => 'required',
+			// 'protein_source' => 'required',
+			// 'preparation_time_minutes' => 'required',
+			'shelf_life_days' => 'integer',
+			// 'equipment_needed' => 'required',
+			'origin_country' => 'required | max:50',
+			'recipe_cuisine' => 'required | max:50',
+			// 'in_your_box' => 'required',
+			// 'gousto_reference' => 'required'
+        );
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) 
+        {
+            return $this->respondValidationError($validator->errors()->getMessages());
+        }
+
 		$recipes = json_decode(file_get_contents(storage_path('app/public/data.json')));
 
 		$last_recipe = end($recipes);
