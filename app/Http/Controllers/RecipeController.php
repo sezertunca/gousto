@@ -42,7 +42,13 @@ class RecipeController extends Controller
 			}
 		}
 
-		return response()->json(["error" => "Couldn't find the recipe with ID: ".$recipeId], 404);
+		return response()->json(
+			[
+				"error" => 
+						[ 
+							"message" => "Couldn't find the recipe with ID: ".$recipeId 
+						]
+			], 404);
 	}
 	
 	/**
@@ -95,6 +101,45 @@ class RecipeController extends Controller
 	// Update an existing recipe
 	public function update(Request $request, $recipeId)
 	{
+		$recipes = json_decode(file_get_contents(storage_path('app/public/data.json')));
+		// Validate request items
+		foreach($recipes as $recipe)
+		{
+			if ($recipe->id == $recipeId)
+			{
+				$recipe->updated_at = date("Y-m-d H:i:s");
+				$recipe->box_type = $request["box_type"] == null ? $recipe->box_type : $request["box_type"];
+				$recipe->title = $request["title"] == null ? $recipe->title : $request["title"];
+				$recipe->slug = $request["slug"] == null ? $recipe->slug : $request["slug"];
+				$recipe->short_title = $request["short_title"] == null ? $recipe->short_title : $request["short_title"];
+				$recipe->marketing_description = $request["marketing_description"] == null ? $recipe->marketing_description : $request["marketing_description"];
+				$recipe->calories_kcal = $request["calories_kcal"] == null ? $recipe->calories_kcal : $request["calories_kcal"];
+				$recipe->protein_grams = $request["protein_grams"] == null ? $recipe->protein_grams : $request["protein_grams"];
+				$recipe->fat_grams = $request["fat_grams"] == null ? $recipe->fat_grams : $request["fat_grams"];
+				$recipe->carbs_grams = $request["carbs_grams"] == null ? $recipe->carbs_grams : $request["carbs_grams"];
+				$recipe->bulletpoint1 = $request["bulletpoint1"] == null ? $recipe->bulletpoint1 : $request["bulletpoint1"];
+				$recipe->bulletpoint2 = $request["bulletpoint2"] == null ? $recipe->bulletpoint2 : $request["bulletpoint2"];
+				$recipe->bulletpoint3 = $request["bulletpoint3"] == null ? $recipe->bulletpoint3 : $request["bulletpoint3"];
+				$recipe->recipe_diet_type_id = $request["recipe_diet_type_id"] == null ? $recipe->recipe_diet_type_id : $request["recipe_diet_type_id"];
+				$recipe->season = $request["season"] == null ? $recipe->season :  $request["season"];
+				$recipe->base = $request["base"] == null ? $recipe->base : $request["base"];
+				$recipe->protein_source = $request["protein_source"] == null ? $recipe->protein_source : $request["protein_source"];
+				$recipe->preparation_time_minutes = $request["preparation_time_minutes"] == null ? $recipe->preparation_time_minutes :  $request["preparation_time_minutes"];
+				$recipe->shelf_life_days = $request["shelf_life_days"] == null ? $recipe->shelf_life_days : $request["shelf_life_days"];
+				$recipe->equipment_needed = $request["equipment_needed"] == null ? $recipe->equipment_needed : $request["equipment_needed"];
+				$recipe->origin_country = $request["origin_country"] == null ? $recipe->origin_country : $request["origin_country"];
+				$recipe->recipe_cuisine = $request["recipe_cuisine"] == null ? $recipe->recipe_cuisine : $request["recipe_cuisine"];
+				$recipe->in_your_box = $request["in_your_box"] == null ? $recipe->in_your_box : $request["in_your_box"];
+				$recipe->gousto_reference = $request["gousto_reference"] == null ? $recipe->gousto_reference : $request["gousto_reference"];
+				$recipe->rate = $request["rate"] == null ? $recipe->rate : $request["rate"] ;
+			}
+		}
+
+		$data = json_encode($recipes, true);
+		
+		file_put_contents(storage_path('app/public/data.json'), $data);
+
+		return response()->json(["Success" => "recipe with id: ".$recipeId." updated"], 200);
 	}
 
 	// Rate an existing recipe between 1 and 5
