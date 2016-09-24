@@ -2,9 +2,7 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
-
-class Recipe extends Model
+class Recipe
 {
     public $id;
 	public $created_at;
