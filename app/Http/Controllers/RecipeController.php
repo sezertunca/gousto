@@ -35,7 +35,7 @@ class RecipeController extends ApiController
     public function index()
     {
     	$recipes = json_decode(file_get_contents(storage_path('app/public/data.json')));
-		return response()->json(["recipes" => $this->recipeTransformer->transformCollection($recipes)], 200);
+		return $this->respond(["recipes" => $this->recipeTransformer->transformCollection($recipes)]);
     }
  
     /**
@@ -50,7 +50,7 @@ class RecipeController extends ApiController
 		{
 			if ($recipe->id == $recipeId)
 			{
-				return response()->json(["recipe" => $this->recipeTransformer->transform($recipe)], 200);
+				return $this->respond(["recipe" => $this->recipeTransformer->transform($recipe)]);
 			}
 		}
 		return $this->respondNotFound('Could not find a recipe with ID: '.$recipeId);
@@ -102,7 +102,7 @@ class RecipeController extends ApiController
 		
 		file_put_contents(storage_path('app/public/data.json'), $data);
 
-		return response()->json(["Success" => "New recipe added."], 200);
+		return $this->respond(["Success" => "New recipe added."]);
 	}
 
 	/**
@@ -149,7 +149,7 @@ class RecipeController extends ApiController
 		
 		file_put_contents(storage_path('app/public/data.json'), $data);
 
-		return response()->json(["Success" => "recipe with id: ".$recipeId." updated"], 200);
+		return $this->respond(["Success" => "recipe with id: ".$recipeId." updated"]);
 	}
 
 	/**
@@ -177,7 +177,7 @@ class RecipeController extends ApiController
 		
 				file_put_contents(storage_path('app/public/data.json'), $data);
 
-				return response()->json(["info" => "recipe with id: ".$recipeId." rated with value: ".$recipe->rate], 200);
+				return $this->respond(["info" => "recipe with id: ".$recipeId." rated with value: ".$recipe->rate]);
 			}
 		}
 	}
@@ -191,7 +191,7 @@ class RecipeController extends ApiController
 
 		$recipesForCuisine = $this->paginate($recipesForCuisine, 5);
 
-		return response()->json(["recipes" => $recipesForCuisine], 200);
+		return $this->respond(["recipes" => $recipesForCuisine]);
 	}
 
 	private function readCSVAndCreateRecipeObjects()

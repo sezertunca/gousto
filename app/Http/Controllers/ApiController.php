@@ -34,22 +34,36 @@ class ApiController extends Controller
         return $this;
     }
 
+    /**
+     * @param  $message
+     * @return [type]
+     */
     public function respondNotFound($message = 'Not found')
     {
     	return $this->setStatusCode(404)->responseWithError($message);
     }
 
-    public function response($data, $headers = [])
+    /**
+     * @param  [type]
+     * @param  array
+     * @return [type]
+     */
+    public function respond($data, $headers = [])
     {
     	return response()->json($data, $this->getStatusCode(), $headers);
     }
 
+    /**
+     * @param  [type]
+     * @return [type]
+     */
     public function responseWithError($message)
     {
-    	return $this->response([
-				"error" => [ 
-					"message" => $message,
-					'status_code' => $this->statusCode]]);
+    	return $this->respond([
+			"error" => [ 
+				"message" => $message,
+				'status_code' => $this->statusCode]
+		]);
     }
 
 }
