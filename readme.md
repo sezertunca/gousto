@@ -10,7 +10,7 @@ Note:
 * Inside the 'project(gousto)/public' folder, run 'php -S localhost:3002' (Optinally, you can use the laravel documentation to learn how to run Laravel projects on https://laravel.com/docs/5.3)
 * Run 'composer install'
 * Rename .env.example file to .env
-* .env file needs an APP_KEY to work.  Generate key using php artisan key:generate inside the app folder or use base64:s8FCWLx/dAF3hL3dSscGftSXxgd4pxnQw5KqK1o4+R0= by adding it to APP_KEY= in your .env file
+* .env file needs an APP_KEY to work.  Generate key using 'php artisan key:generate' inside the 'project(gousto)' folder or use base64:s8FCWLx/dAF3hL3dSscGftSXxgd4pxnQw5KqK1o4+R0= by updating it to APP_KEY= in your .env file
 (APP_KEY=base64:s8FCWLx/dAF3hL3dSscGftSXxgd4pxnQw5KqK1o4+R0=)
 * Put the data.csv in 'storage/app/public'
 
