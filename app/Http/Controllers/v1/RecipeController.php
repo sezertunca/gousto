@@ -259,6 +259,7 @@ class RecipeController extends ApiController
 		{
 			$recipes[] = array_combine($header, $row);
 		}
+
 		$recipeObjects = array();
 
 		foreach($recipes as $recipe)
