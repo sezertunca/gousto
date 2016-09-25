@@ -148,7 +148,15 @@ class RecipeController extends ApiController
     */
 	public function update(Request $request, $recipeId)
 	{
+		// Check if we got any field sent to update, otherwsie return immediately
+		$numberOfFieldsSent = count($request->all());
+		if ($numberOfFieldsSent < 1)
+		{
+			return $this->respondValidationError("No info sent to update");
+		}
+
 		$recipes = json_decode(file_get_contents(storage_path('app/public/data.json')));
+
 		// Validate request items
 		foreach($recipes as $recipe)
 		{

@@ -5,13 +5,7 @@ use App\Recipe;
 // User Arrange, Act, Assert
 
 class RecipeTest extends ApiTester
-{    
-    // See the total number of recipes
-    // Add a recipe and see the total number after adding
-    // Update recipe and see if it's updated
-    // Rate a recipe
-    // Try to rate a recipe that is less than 1 or more than 5;
-    
+{        
     public function setUp()
     {
         parent::setUp();
@@ -96,17 +90,7 @@ class RecipeTest extends ApiTester
     {
         $this->call('POST', 'api/v1/recipes/store', ['title' => 'Test recipe title']);
         $this->assertResponseStatus(403);
-        // $this->assertResponseOk();
     }
-
-    /**
-     * @test
-     */
-    // public function it_rates_recipe_with_valid_integer()
-    // {
-    //     $this->call('POST', 'api/v1/recipes/1/rate', ['value' => '2']);
-    //     $this->assertResponseOk();
-    // }
 
     /**
      * @test
@@ -117,5 +101,12 @@ class RecipeTest extends ApiTester
         $this->assertEquals(3, count($recipes));
     }
 
-
+    /**
+     * @test
+     */
+    public function it_tries_to_update_recipe_with_no_info()
+    {
+        $this->call('POST', 'api/v1/recipes/1/update', []);
+        $this->assertResponseStatus(403);
+    }
 }
