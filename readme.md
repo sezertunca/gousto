@@ -14,7 +14,7 @@ Note:
 (APP_KEY=base64:s8FCWLx/dAF3hL3dSscGftSXxgd4pxnQw5KqK1o4+R0=)
 * Put the data.csv in 'storage/app/public'
 
-## Access the API routes using localhost:3002
+### Access the API routes using localhost:3002
 
 + To fetch all recipes:
 	http://localhost:3002/api/v1/recipes
@@ -29,7 +29,7 @@ Note:
 + Store a new recipe:
 	http://localhost:3002/api/v1/recipes/store
 
-## Running tests
+### Running tests
 Inside the 'gousto' folder using Terminal app (Mac):
 * Run 'phpunit'
 
