@@ -14,19 +14,19 @@ Note:
 (APP_KEY=base64:s8FCWLx/dAF3hL3dSscGftSXxgd4pxnQw5KqK1o4+R0=)
 * Put the data.csv in 'storage/app/public'
 
-Access the API routes using localhost:3002
+## Access the API routes using localhost:3002
 
-+ To fetch all recipes
++ To fetch all recipes:
 	http://localhost:3002/api/v1/recipes
-+ To fetch a recipe by Id
++ To fetch a recipe by Id:
 	http://localhost:3002/api/v1/recipes/1
 + Fetch all recipes for a specific cuisine (should paginate)
 	http://localhost:3002/api/v1/recipesForCuisine/italian
-+ Rate an existing recipe between 1 and 5
++ Rate an existing recipe between 1 and 5:
 	http://localhost:3002/api/v1/recipes/1/rate
-+ Update an existing recipes
++ Update an existing recipes:
 	http://localhost:3002/api/v1/recipes/1/update
-+ Store a new recipe
++ Store a new recipe:
 	http://localhost:3002/api/v1/recipes/store
 
 ## Running tests
