@@ -1,10 +1,10 @@
 # How to run
 
 Note: 
-1.Application built on a Mac and installation may slightly vary on a Windows PC.
-2.APIs can be tested using https://www.getpostman.com.
-3.Please put the data.csv file into the 'storage/app/public' folder.
-4.Follow the instructions below using Terminal app in the Mac.
+- Application built on a Mac and installation may slightly vary on a Windows PC.
+- APIs can be tested using https://www.getpostman.com.
+- Please put the data.csv file into the 'storage/app/public' folder.
+- Follow the instructions below using Terminal app in the Mac.
 
 ## Running the Laravel Project
 * Inside the 'project(gousto)/public' folder, run 'php -S localhost:3002' (Optinally, you can use the laravel documentation to learn how to run Laravel projects on https://laravel.com/docs/5.3)
