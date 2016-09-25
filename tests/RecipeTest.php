@@ -18,10 +18,9 @@ class RecipeTest extends ApiTester
     public function setUp()
     {
         parent::setUp();
-        // Generate test data
- 
+        
+        // Generate fake test data
         $path = storage_path('app/public/data-test.json');
-
         if (!File::exists( $path ))
         {
             $fakeRecipes = 
@@ -32,15 +31,15 @@ class RecipeTest extends ApiTester
             ];
 
             $fakeRecipes = json_encode($fakeRecipes);
-            
             File::put($path,$fakeRecipes);
         }
     }
 
+    
     public function tearDown()
     {
+        // Delete the fake data created for tests
         $path = storage_path('app/public/data-test.json');
-
         if (File::exists($path))
         {
             File::delete($path);
