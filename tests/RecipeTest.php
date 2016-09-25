@@ -1,5 +1,14 @@
 <?php
 
+/**
+* RecipeTest.php
+* Gousto API Test
+*
+* Created by Sezer Tunca on 24/09/2016.
+* Copyright © 2016 Sezer Tunca. All rights reserved.
+* Created for Gousto.
+*/
+
 use App\Recipe;
 
 // User Arrange, Act, Assert

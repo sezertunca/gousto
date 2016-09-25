@@ -1,13 +1,22 @@
 <?php
 
+/**
+* RecipeController.php
+* Gousto API Test
+*
+* Created by Sezer Tunca on 24/09/2016.
+* Copyright © 2016 Sezer Tunca. All rights reserved.
+* Created for Gousto.
+*/
+
 namespace App\Http\Controllers\v1;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
-use App\Recipe;
-use File;
 use Illuminate\Pagination\LengthAwarePaginator;
 use App\Transformers\RecipeTransformer;
+use App\Recipe;
+use File;
 use Validator;
 
 class RecipeController extends ApiController
@@ -24,7 +33,7 @@ class RecipeController extends ApiController
 
 		if (! file_exists(storage_path('app/public/data.json')))
 		{
-			// Convert recipes array to ollection (collect) to be able to make calls such as where('cuisine', 'asian')
+			// Convert recipes array to collection (collect) to be able to make calls such as where('cuisine', 'asian')
 			$data = collect($this->readCSVAndCreateRecipeObjects());
 			File::put(storage_path('app/public/data.json'),$data);
 		}

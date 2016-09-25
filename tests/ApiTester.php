@@ -1,5 +1,15 @@
 <?php
 
+/**
+* ApiTester.php
+* Gousto API Test
+*
+* Created by Sezer Tunca on 24/09/2016.
+* Copyright © 2016 Sezer Tunca. All rights reserved.
+* Created for Gousto.
+*/
+
+
 use Faker\Factory as Faker;
 
 class ApiTester extends TestCase
