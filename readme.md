@@ -6,7 +6,7 @@ Note:
 - Please put the data.csv file into the 'storage/app/public' folder.
 - Follow the instructions below using Terminal app in the Mac.
 
-## Running the Laravel Project
+### Running the Laravel Project
 * Inside the 'project(gousto)/public' folder, run 'php -S localhost:3002' (Optinally, you can use the laravel documentation to learn how to run Laravel projects on https://laravel.com/docs/5.3)
 • Run 'composer install'
 • Rename .env.example file to .env
