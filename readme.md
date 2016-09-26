@@ -33,6 +33,7 @@ Note:
 Inside the 'gousto' folder using Terminal app (Mac):
 * Run 'phpunit'
 
+Please continue to read the 'Gousto_api_test_Sezer_Tunca.pdf' file.
 
 Any problem email me at sezertunca@gmail.com
 
